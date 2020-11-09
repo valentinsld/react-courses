@@ -42,6 +42,7 @@
           return (
             <ul>
               {messages.map((msg, i) => (
+                // ne pas oublier la clé
                 <Message key={i} message={msg} />
               ))}
             </ul>

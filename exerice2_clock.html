@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+      .heading {
+        color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      let messages = ["hello", "comment tu t appelles", "je suis Valentin"];
+
+      setTimeout(() => {
+        messages.push("coucou !!");
+        console.log(messages);
+      }, 500);
+
+      // Component
+      class App extends React.Component {
+        render() {
+          const timer = new Date().toLocaleTimeString();
+
+          return (
+            <div className="main">
+              <h1 style={{ color: "red" }}>{timer}</h1>
+            </div>
+          );
+        }
+      }
+
+      // Rendu dans le DOM
+      function tick() {
+        setTimeout(() => {
+          ReactDOM.render(<App />, document.getElementById("root"));
+          tick();
+        }, 1000);
+      }
+      tick();
+    </script>
+  </body>
+</html>
