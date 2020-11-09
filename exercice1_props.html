@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+      .heading {
+        color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // Component
+      class App extends React.Component {
+        render() {
+          // obligé d'utiliser un map
+          const numbers = [1, 2, 3];
+
+          return (
+            <div className="main">
+              <h1 style={{ color: "red" }}>Mes messages</h1>
+              <Messages />
+            </div>
+          );
+        }
+      }
+
+      class Messages extends React.Component {
+        render() {
+          //   const { messages } = this.props;
+          const messages = [
+            "hello",
+            "comment tu t appelles",
+            "je suis Valentin",
+          ];
+
+          return (
+            <ul>
+              {messages.map((msg, i) => (
+                <Message key={i} message={msg} />
+              ))}
+            </ul>
+          );
+        }
+      }
+
+      class Message extends React.Component {
+        render() {
+          const { message } = this.props;
+
+          return <li>{message}</li>;
+        }
+      }
+
+      // Rendu dans le DOM
+      ReactDOM.render(
+        <App title="titre" />,
+        // <Hello message = "Hello React" subtitle="Enjoy ! "/>,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
