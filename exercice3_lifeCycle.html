@@ -64,10 +64,14 @@
 
         componentDidMount() {
           // Update state
-          setInterval(() => {
+          this.timer = setInterval(() => {
             // this.state.count = this.state.count + 1 ;
             this.setState({ time: new Date() });
           }, 1000);
+        }
+
+        componentWillUnmount(){
+          clearInterval(this.timer)
         }
 
         render() {
