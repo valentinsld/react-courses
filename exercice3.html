@@ -17,13 +17,13 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      class TestState extends React.Component {
+      class Clock extends React.Component {
         constructor(props) {
           super(props);
 
           // définition du state, un simple litteral
           this.state = {
-            time: new Date,
+            time: new Date(),
           };
         }
 
@@ -31,20 +31,16 @@
           // Update state
           setInterval(() => {
             // this.state.count = this.state.count + 1 ;
-            this.setState({ time: new Date });
+            this.setState({ time: new Date() });
           }, 1000);
         }
 
         render() {
-          return (
-            <div>
-              <p>Time: {this.state.time.toLocaleTimeString()} </p>
-            </div>
-          );
+          return <p>Time: {this.state.time.toLocaleTimeString()} </p>;
         }
       }
 
-      ReactDOM.render(<TestState />, document.getElementById("root"));
+      ReactDOM.render(<Clock />, document.getElementById("root"));
     </script>
   </body>
 </html>
