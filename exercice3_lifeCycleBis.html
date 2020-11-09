@@ -21,34 +21,25 @@
         constructor(props) {
           super(props);
 
-          this.state = {
-            displayClock: true,
-          };
-        }
-
-        componentDidMount() {
-          setTimeout(() => {
-            this.setState({ displayClock: false });
-          }, 5000);
         }
 
         render() {
           return (
             <div>
               <h1>Hi !!</h1>
-              {this.state.displayClock === true ? <Clock /> : <p>REMOVE</p>}
+              <Line />
             </div>
           );
         }
       }
 
-      class Clock extends React.Component {
+      class Line extends React.Component {
         constructor(props) {
           super(props);
 
           // définition du state, un simple litteral
           this.state = {
-            time: new Date(),
+            count: 0,
           };
 
           this.timer;
@@ -57,17 +48,14 @@
         componentDidMount() {
           // Update state
           this.timer = setInterval(() => {
-            // this.state.count = this.state.count + 1 ;
-            this.setState({ time: new Date() });
-          }, 1000);
-        }
-
-        componentWillUnmount() {
-          clearInterval(this.timer);
+            if (this.state.count < 200) {
+              this.setState({ count: this.state.count + 1 });
+            }
+          }, 100);
         }
 
         render() {
-          return <p>Time: {this.state.time.toLocaleTimeString()} </p>;
+          return <p style={{maxWidth: 236 +'px'}}>{'* '.repeat(this.state.count)}</p>;
         }
       }
 
