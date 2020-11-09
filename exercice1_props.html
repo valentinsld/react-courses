@@ -17,6 +17,8 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
+      const messages = ["hello", "comment tu t appelles", "je suis Valentin"];
+
       // Component
       class App extends React.Component {
         render() {
@@ -26,7 +28,7 @@
           return (
             <div className="main">
               <h1 style={{ color: "red" }}>Mes messages</h1>
-              <Messages />
+              <Messages messages={messages} />
             </div>
           );
         }
@@ -34,12 +36,8 @@
 
       class Messages extends React.Component {
         render() {
-          //   const { messages } = this.props;
-          const messages = [
-            "hello",
-            "comment tu t appelles",
-            "je suis Valentin",
-          ];
+
+          const { messages } = this.props;
 
           return (
             <ul>
@@ -61,8 +59,7 @@
 
       // Rendu dans le DOM
       ReactDOM.render(
-        <App title="titre" />,
-        // <Hello message = "Hello React" subtitle="Enjoy ! "/>,
+        <App />,
         document.getElementById("root")
       );
     </script>
