@@ -34,6 +34,7 @@
 
           this.state = {
             compteur: 0,
+            started: false
           };
           this.timer;
 
@@ -43,6 +44,8 @@
         }
 
         start() {
+          this.setState({ started: true });
+
           this.timer = setInterval(() => {
             if (this.state.compteur < MAX) {
               this.setState({
@@ -55,6 +58,7 @@
         }
 
         stop() {
+          this.setState({ started: false });
           clearInterval(this.timer);
         }
 
@@ -65,12 +69,12 @@
 
         render() {
           const { incrementation } = this.props;
-          const { compteur } = this.state;
+          const { compteur, started } = this.state;
 
           return (
             <div>
-              <button onClick={this.start} type="button">Start (+ {incrementation})</button>
-              <button onClick={this.stop} type="button">Stop </button>
+              <button onClick={this.start} type="button" disabled={started}>Start (+ {incrementation})</button>
+              <button onClick={this.stop} type="button" disabled={!started}>Stop </button>
               <button onClick={this.reset} type="button">reset</button>
               <p>{compteur}</p>
             </div>
