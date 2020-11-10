@@ -36,7 +36,7 @@
             compteur: 0,
             started: false
           };
-          this.timer;
+          this.timer = null;
 
           this.start = this.start.bind(this);
           this.stop = this.stop.bind(this);
@@ -44,6 +44,7 @@
         }
 
         start() {
+          clearInterval(this.timer);
           this.setState({ started: true });
 
           this.timer = setInterval(() => {
@@ -52,7 +53,8 @@
                 compteur: this.state.compteur + this.props.incrementation,
               });
             } else {
-              this.stop();
+              // this.stop();
+              this.setState({ compteur: 0 });
             }
           }, 1000);
         }
@@ -67,6 +69,10 @@
           this.setState({ compteur: 0 });
         }
 
+        dec2bin(dec){
+            return (dec >>> 0).toString(2);
+        }
+
         render() {
           const { incrementation } = this.props;
           const { compteur, started } = this.state;
@@ -76,7 +82,7 @@
               <button onClick={this.start} type="button" disabled={started}>Start (+ {incrementation})</button>
               <button onClick={this.stop} type="button" disabled={!started}>Stop </button>
               <button onClick={this.reset} type="button">reset</button>
-              <p>{compteur}</p>
+              <p>{this.dec2bin(compteur)}</p>
             </div>
           );
         }
