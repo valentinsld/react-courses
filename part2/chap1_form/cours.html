@@ -39,7 +39,7 @@
 
           const name = event.target.name.value;
 
-          if (name == "") {
+          if (name.trim() == "") {
             this.setState({ error: "Le champ est vide" });
 
           } else if (this.state.users.includes(name)) {
