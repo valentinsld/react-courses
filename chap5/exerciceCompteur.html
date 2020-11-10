@@ -27,6 +27,7 @@
         }
       }
 
+      const MAX = 20
       class Compteur extends React.Component {
         constructor(props) {
           super(props);
@@ -43,13 +44,12 @@
 
         start() {
           this.timer = setInterval(() => {
-            // console.log(this.state.lines);
-            if (this.state.compteur < 20) {
+            if (this.state.compteur < MAX) {
               this.setState({
                 compteur: this.state.compteur + this.props.incrementation,
               });
             } else {
-              clearInterval(this.timer);
+              this.stop();
             }
           }, 1000);
         }
@@ -69,9 +69,9 @@
 
           return (
             <div>
-              <button onClick={this.start}>Start (+ {incrementation})</button>
-              <button onClick={this.stop}>Stop </button>
-              <button onClick={this.reset}>reset</button>
+              <button onClick={this.start} type="button">Start (+ {incrementation})</button>
+              <button onClick={this.stop} type="button">Stop </button>
+              <button onClick={this.reset} type="button">reset</button>
               <p>{compteur}</p>
             </div>
           );
