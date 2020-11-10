@@ -30,16 +30,14 @@
         }
 
         componentDidMount() {
-          const that = this
-          // Update state
-          function tick() {
-            setTimeout(() => {
-              // this.state.count = this.state.count + 1 ;
-              that.setState({ time: new Date() });
-              tick();
-            }, 1000);
-          }
-          tick()
+          this.tick();
+        }
+
+        tick() {
+          setTimeout(() => {
+            this.setState({ time: new Date() });
+            this.tick();
+          }, 1000);
         }
 
         render() {
