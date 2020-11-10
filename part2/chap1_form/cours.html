@@ -16,8 +16,8 @@
         constructor(props) {
           super(props);
           this.state = {
-            name: "",
             users: [],
+            name: "",
             error: "",
           };
 
@@ -41,9 +41,9 @@
           const name = event.target.name.value;
 
           if (name == "") {
-            this.setState({ error: "Champ vide" });
+            this.setState({ error: "Le champ est vide" });
           } else if (this.state.users.includes(name)) {
-            this.setState({ error: "User exist" });
+            this.setState({ error: "Cette utilisateur existe déjà" });
           } else {
             this.setState({});
             this.setState({
