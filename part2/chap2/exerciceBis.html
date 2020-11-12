@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            base1: 10,
+            value1: "",
+            base2: 7,
+            value2: "",
+            error: "",
+          };
+
+          this.handleChange = this.handleChange.bind(this);
+          this.handleChangeSelect = this.handleChangeSelect.bind(this);
+        }
+
+        conversion(num, b1, b2) {
+          return num == "" ? "" : parseInt(num, b1).toString(b2);
+        }
+
+        handleChange(num, base, n) {
+          //    Verifications
+          //////////////////////////
+          if (num != "" && isNaN(parseInt(num, base))) {
+            this.setState({
+              error: "Ce n'est pas une valeur dans la base donnée !",
+            });
+            return;
+          }
+
+          //        Changes
+          //////////////////////////
+          if (n == 1) {
+            let result = this.conversion(num, base, this.state.base2);
+            this.setState({ value1: num, value2: result });
+          } else if (n == 2) {
+            let result = this.conversion(num, base, this.state.base1);
+            this.setState({ value1: result, value2: num });
+          }
+          this.setState({ error: '' });
+        }
+
+        handleChangeSelect(b) {
+          const { value1, base1 } = this.state;
+
+          this.setState({ base2: b });
+
+          // next tick()
+          setTimeout(() => {
+            this.handleChange(value1, base1, 1);
+          }, 0);
+        }
+
+        render() {
+          const { base1, base2, value1, value2, error } = this.state;
+
+          return (
+            <React.Fragment>
+              <h1>Converteur</h1>
+
+              <BaseNumberInput
+                n={1}
+                base={base1}
+                value={value1}
+                onChangeBase={(a, b, c) => this.handleChange(a, b, c)}
+              />
+              <br />
+              <Select
+                base={base2}
+                onChangeBase={(b) => this.handleChangeSelect(b)}
+              />
+              <br />
+              <BaseNumberInput
+                n={2}
+                base={base2}
+                value={value2}
+                onChangeBase={(a, b, c) => this.handleChange(a, b, c)}
+              />
+
+              <p style={{ color: "red" }}>{error}</p>
+            </React.Fragment>
+          );
+        }
+      }
+
+      class BaseNumberInput extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event) {
+          const { value } = event.target;
+          const { base, n } = this.props;
+
+          this.props.onChangeBase(value, base, n);
+        }
+
+        render() {
+          const { base, value } = this.props;
+
+          return (
+            <React.Fragment>
+              <label>Base {base}</label>
+              <br />
+              <input type="text" value={value} onChange={this.handleChange} />
+            </React.Fragment>
+          );
+        }
+      }
+
+      class Select extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event) {
+          const { value } = event.target;
+
+          this.props.onChangeBase(value, this.props.type);
+        }
+
+        render() {
+          const { base } = this.props;
+
+          return (
+            <React.Fragment>
+              <h2>Selectionnez une base</h2>
+              <select value={base} onChange={this.handleChange}>
+                <option value="13">13</option>
+                <option value="7">7</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+              </select>
+              <br />
+            </React.Fragment>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
