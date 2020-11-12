@@ -27,7 +27,7 @@
 
         handleChange(num, name) {
 
-          if (num != "" && parseInt(num) != num) {
+          if (num.trim() == "" && !isNaN(num) ) {
             this.setState({
               error: "Ce n'est pas un entier !",
             });
